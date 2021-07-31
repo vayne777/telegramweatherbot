@@ -1,4 +1,7 @@
 package ru.projects.telegramweatherbot.repository;
 
-public class WeatherRepo {
+import org.springframework.data.jpa.repository.JpaRepository;
+import ru.projects.telegramweatherbot.model.WeatherEntity;
+
+public interface WeatherRepo extends JpaRepository<WeatherEntity, Long> {
 }
