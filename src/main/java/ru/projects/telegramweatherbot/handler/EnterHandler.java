@@ -13,6 +13,8 @@ import ru.projects.telegramweatherbot.service.State;
 
 import java.io.Serializable;
 import java.util.List;
+
+import static ru.projects.telegramweatherbot.handler.WeatherHandler.GET_BALABOL;
 import static ru.projects.telegramweatherbot.utils.TelegramUtils.createInlineKeyboardButton;
 import static ru.projects.telegramweatherbot.utils.TelegramUtils.createMessageTemplate;
 @Component
@@ -94,15 +96,15 @@ public class EnterHandler implements Handler {
         // Создаем кнопку для начала игры
         InlineKeyboardMarkup inlineKeyboardMarkup = new InlineKeyboardMarkup();
 
-        List<InlineKeyboardButton> inlineKeyboardButtonsRowOne = List.of(
-                createInlineKeyboardButton("Узнать погоду", WeatherHandler.SEND_LOCATION));
-
-        inlineKeyboardMarkup.setKeyboard(List.of(inlineKeyboardButtonsRowOne));
-
+        InlineKeyboardButton inlineKeyboardButtonsRowOne = createInlineKeyboardButton("Узнать погоду", WeatherHandler.SEND_LOCATION);
+        InlineKeyboardButton balabolButton = createInlineKeyboardButton("Балабол", GET_BALABOL);
+        List<InlineKeyboardButton> inlineKeyboardButtons = List.of(inlineKeyboardButtonsRowOne, balabolButton);
+        InlineKeyboardMarkup markup = new InlineKeyboardMarkup(List.of(inlineKeyboardButtons));
         SendMessage sendMessage = createMessageTemplate(user);
+
         sendMessage.setText(String.format(
                 "Your name is saved as: %s", user.getName()));
-        sendMessage.setReplyMarkup(inlineKeyboardMarkup);
+        sendMessage.setReplyMarkup(markup);
         return List.of(sendMessage);
     }
 }
